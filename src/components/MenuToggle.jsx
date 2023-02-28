@@ -5,15 +5,20 @@ const Path = (props) => (
   <motion.path
     fill='transparent'
     strokeWidth='3'
-    stroke='hsl(0, 0%, 18%)'
+    stroke='#fff'
     strokeLinecap='round'
     {...props}
   />
 )
 
 export const MenuToggle = ({ toggle }) => (
-  <button className='z-50' onClick={toggle}>
-    <svg width='23' height='23' viewBox='0 0 23 23'>
+  <button className='flex justify-center items-center' onClick={toggle}>
+    <svg
+      className='hover:scale-125 transition duration-300'
+      width='23'
+      height='23'
+      viewBox='0 0 23 23'
+    >
       <Path
         variants={{
           closed: { d: 'M 2 2.5 L 20 2.5' },
@@ -37,5 +42,3 @@ export const MenuToggle = ({ toggle }) => (
     </svg>
   </button>
 )
-
-export default MenuToggle
