@@ -9,7 +9,7 @@ button {
   -moz-user-select: none;
   -ms-user-select: none;
   cursor: pointer;
-  position: absolute;
+  position: fixed;
   top: 18px;
   left: 15px;
   width: 50px;
