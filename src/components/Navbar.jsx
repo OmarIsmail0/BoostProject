@@ -1,116 +1,75 @@
-import React from 'react'
-import reactLogo from '../assets/react.svg'
+import { useState } from 'react'
+import Logo from '../assets/Logo.png'
+import Jhin from '../assets/jhin.jpg'
+import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
+import { motion } from 'framer-motion'
 
-import { motion, useCycle } from 'framer-motion'
-import { MenuToggle } from './MenuToggle'
-
-import { AiFillBug } from 'react-icons/ai'
-
-const sidebar = {
-  open: (height = 1000) => ({
-    clipPath: `circle(${height * 2 + 200}px at 25px 40px)`,
-    transition: {
-      type: 'spring',
-      stiffness: 20,
-      restDelta: 2,
-    },
-  }),
-  closed: {
-    clipPath: 'circle(0px at 25px 40px)',
-    transition: {
-      type: 'spring',
-      delay: 0.5,
-      stiffness: 400,
-      damping: 40,
-    },
-  },
-}
-
-const variants = {
-  open: {
-    y: 10,
-    opacity: 1,
-    transition: {
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 },
-      y: { stiffness: 1000, velocity: -100 },
-    },
-  },
-  closed: {
-    y: 50,
-    opacity: 0,
-    transition: {
-      transition: { staggerChildren: 0.05, staggerDirection: -1 },
-      y: { stiffness: 1000 },
-    },
-  },
-}
 const Navbar = () => {
-  const [isOpen, toggleOpen] = useCycle(false, true)
-
+  const [isMenuToggled, setIsMenuToggled] = useState(false)
+  const color = 'from-[#232E58] via-[#420182] to-[#903E76]'
   const links = [
-    { id: 1, title: 'UNRANKED ACCOUNTS' },
-    { id: 2, title: 'BOOSTING' },
-    { id: 3, title: 'CONTACT US' },
+    { id: 1, text: 'HOME' },
+    { id: 2, text: 'ABOUT' },
+    { id: 3, text: 'CONTACT US' },
+    { id: 4, text: 'BUG REPORT' },
   ]
-  return (
-    <nav>
-      <div className='bg-transparent shadow-2xl p-7'>
-        <div className='flex justify-between items-center mx-auto px-4'>
-          <div className='hover:scale-150 transition duration-100 cursor-pointer'></div>
 
-          <div>
-            <img src={reactLogo} alt='logo' />
+  return (
+    <nav className='sticky'>
+      <div className={`flex justify-between items-center z-30 w-full`}>
+        <div className='flex justify-between items-center mx-auto w-5/6 h-32'>
+          <div className='w-[300px] h-[200px] '>
+            <img alt='logo' src={Logo} />
           </div>
-          <div>log/reg</div>
+          <motion.div className='text-white text-3xl hover:scale-125 transition duration-200 cursor-pointer'>
+            <AiOutlineMenu onClick={() => setIsMenuToggled(true)} />
+          </motion.div>
         </div>
       </div>
-      <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'}>
+      {/* <div className={`flex justify-between items-center z-30 w-full`}>
+        <img alt='jhin' src={Jhin} className='w-full h-full object-cover' />
+      </div> */}
+
+      {isMenuToggled && (
         <motion.div
-          className='fixed top-0 left-0 bottom-0 w-1/5 bg-gray-300'
-          variants={sidebar}
-        />
-        <motion.ul
-          variants={variants}
-          className='fixed w-1/5 h-5/6 flex flex-col justify-between items-center'
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0, x: 50 },
+            visible: { opacity: 1, x: 0 },
+          }}
+          className={`fixed flex flex-col justify-start items-center right-0 bottom-0 
+          z-40 h-full w-[25%] bg-gray-200 drop-shadow-xl`}
         >
-          <div className='w-full flex flex-col justify-center items-center'>
+          {/* Close Icon */}
+          <div className='flex justify-between p-12 my-20'>
+            <div
+              className={`border-2 border-black rounded-full text-black text-3xl p-4 
+              hover:border-transparent hover:bg-gradient-to-r from-[#170140] to-[#220161] hover:text-gray-200
+              hover:scale-125 transition duration-200 cursor-pointer`}
+              onClick={() => setIsMenuToggled(!isMenuToggled)}
+            >
+              <AiOutlineClose />
+            </div>
+          </div>
+          {/* Menu Items */}
+          <div className=' flex flex-col justify-between items-center gap-10 text-2xl'>
             {links.map((link) => (
-              <motion.li
+              <div
                 key={link.id}
-                whileHover={{ scale: 1.5 }}
-                whileTap={{ scale: 0.95 }}
-                className='w-[80%] flex justify-center mb-10 mt-10
-                 text-gray-800 font-extrabold text-2xl cursor-pointer'
+                className={`font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#170140] to-[#220161] 
+                hover:scale-125 transition duration-200 cursor-pointer`}
               >
-                {link.title}
-              </motion.li>
+                <p className=''>{link.text}</p>
+              </div>
             ))}
           </div>
-          <div
-            className='w-[80%] mb-10 mt-10
-                 text-gray-800 font-extrabold text-2xl cursor-pointer'
-          >
-            <motion.li
-              className=' flex justify-center'
-              whileHover={{ scale: 1.5 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <AiFillBug style={{ fontSize: '30px' }} /> BUG REPORT
-            </motion.li>
-          </div>
-        </motion.ul>
-        <MenuToggle toggle={() => toggleOpen()} />
-      </motion.nav>
+        </motion.div>
+      )}
     </nav>
   )
 }
 
 export default Navbar
-// .background {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   bottom: 0;
-//   width: 300px;
-//   background: #fff;
-// }
