@@ -53,7 +53,7 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className='sticky'>
+    <nav className='sticky z-50'>
       <motion.nav initial={false} animate={isOpen ? 'open' : 'closed'}>
         <motion.div
           className='fixed top-0 left-0 bottom-0 w-1/5 bg-gray-900'
