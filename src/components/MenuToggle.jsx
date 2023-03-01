@@ -12,7 +12,11 @@ const Path = (props) => (
 )
 
 export const MenuToggle = ({ toggle }) => (
-  <button className='flex justify-center items-center' onClick={toggle}>
+  <button
+    id='modal-button'
+    className='flex justify-center items-center'
+    onClick={toggle}
+  >
     <svg
       className='hover:scale-125 transition duration-300'
       width='23'

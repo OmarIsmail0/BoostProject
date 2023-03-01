@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import lol from '../assets/lol.png'
-import csgo from '../assets/csgo.jpg'
-import apex from '../assets/apex.png'
-import val from '../assets/valorant.png'
-import overwatch from '../assets/overwatch.png'
+import lol from '../../assets/lol.png'
+import csgo from '../../assets/csgo.jpg'
+import apex from '../../assets/apex.png'
+import val from '../../assets/valorant.png'
+import overwatch from '../../assets/overwatch.png'
 
-export const Slider = () => {
+const Background = () => {
   const [index, setIndex] = useState(0)
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export const Slider = () => {
     const intervalId = setInterval(() => {
       const newIndex = isLastSlide ? 0 : index + 1
       setIndex(newIndex)
-    }, 5000)
+    }, 6500)
 
     return () => clearInterval(intervalId)
   })
@@ -30,10 +30,10 @@ export const Slider = () => {
     <div className='max-w-full h-screen w-full'>
       <div
         style={{ backgroundImage: `url(${slides[index].url})` }}
-        className='w-full h-full bg-cover duration-500'
-      ></div>
+        className='fixed w-full h-full bg-cover duration-500 z-20'
+      />
     </div>
   )
 }
 
-export default Slider
+export default Background
